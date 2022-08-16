@@ -10,7 +10,7 @@ describe("finalwhitelist", () => {
 	const provider = anchor.AnchorProvider.env();
 	const program = anchor.workspace.Finalwhitelist as Program<Finalwhitelist>;
 	const wallet = provider.wallet;
-	const seed = "nnntest";
+	const seed = "nnnssntest";
 	it("Is makes the whitelist!", async () => {
 		// Add your test here.
 
@@ -46,7 +46,11 @@ describe("finalwhitelist", () => {
 			await program.account.mainWhiteListingAccount.fetch(pda);
 		console.log(mainWhitelistingAccount.counter);
 		const [new_pda, _1] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), key.publicKey.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				key.publicKey.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 		const tx = await program.methods
@@ -63,7 +67,7 @@ describe("finalwhitelist", () => {
 	// 3LTZgMPHGwpdqLSzjDgytiGju9vF77dSzZqzKWrj9ckB
 	it("Is removes a wallet from the whitelist!", async () => {
 		// Add your test here.
-		const key = new PublicKey("FUYTKddsMLv49S7d8UXxLvXPbFNwuVmNMZxC5YSCyNVM");
+		const key = new PublicKey("4nXukaNxuLWa1xPxae1Ymv6dW9tCpvvE24tBRUiHLYAG");
 
 		const [pda, _] = await PublicKey.findProgramAddress(
 			[
@@ -76,7 +80,11 @@ describe("finalwhitelist", () => {
 		// 	await program.account.mainWhiteListingAccount.fetch(pda);
 		// console.log(mainWhitelistingAccount.counter);
 		const [new_pda, _1] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), key.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				key.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 		const initBalance = await provider.connection.getBalance(wallet.publicKey);
@@ -103,7 +111,11 @@ describe("finalwhitelist", () => {
 		const newWallet = Keypair.generate();
 		console.log(newWallet.publicKey.toString());
 		const [new_pda1, _2] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), newWallet.publicKey.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				newWallet.publicKey.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 		const [pda, _] = await PublicKey.findProgramAddress(
@@ -117,7 +129,11 @@ describe("finalwhitelist", () => {
 		// 	await program.account.mainWhiteListingAccount.fetch(pda);
 		// console.log(mainWhitelistingAccount.counter);
 		const [new_pda, _1] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), key.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				key.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 		const initBalance = await provider.connection.getBalance(wallet.publicKey);
@@ -145,12 +161,12 @@ describe("finalwhitelist", () => {
 		const [pda, _] = await PublicKey.findProgramAddress(
 			[
 				wallet.publicKey.toBuffer(),
-				Buffer.from(anchor.utils.bytes.utf8.encode("newSeed")),
+				Buffer.from(anchor.utils.bytes.utf8.encode("newSeeeed")),
 			],
 			program.programId,
 		);
 		const tx = await program.methods
-			.createWhitelist("newseed")
+			.createWhitelist("newSeeeed")
 			.accounts({
 				mainWhitelistingAccount: pda,
 				authority: wallet.publicKey,
@@ -161,9 +177,13 @@ describe("finalwhitelist", () => {
 
 	it("Access the whitelist accounts", async () => {
 		// Add your test here.
-		const key = new PublicKey("GWr6PTHPsT2tya39Y4GS81K1ABUtVax1ZZTUR5YBGAeR");
+		const key = new PublicKey("4nXukaNxuLWa1xPxae1Ymv6dW9tCpvvE24tBRUiHLYAG");
 		const [new_pda, _1] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), key.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				key.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 		const walletAccount = await program.account.wallet.fetch(new_pda);
@@ -172,14 +192,9 @@ describe("finalwhitelist", () => {
 		// console.log("Your transaction signature", tx);
 	});
 
-	it("Access the whitelists through seeds", async () => {
-		// Add your test here.
-		// const tx = await program.methods.createWhitelist().rpc();
-		// console.log("Your transaction signature", tx);
-	});
 	it("Checks to see if its whitelisted", async () => {
 		// Add your test here.
-		const key = new PublicKey("CvipiRkmYNHc3Ztxkzh7pTjUMYHSru9twzNh1VttX9oL");
+		const key = new PublicKey("4nXukaNxuLWa1xPxae1Ymv6dW9tCpvvE24tBRUiHLYAG");
 
 		const [pda, _] = await PublicKey.findProgramAddress(
 			[
@@ -192,7 +207,11 @@ describe("finalwhitelist", () => {
 		// 	await program.account.mainWhiteListingAccount.fetch(pda);
 		// console.log(mainWhitelistingAccount.counter);
 		const [new_pda, _1] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), key.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				key.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 
@@ -218,7 +237,11 @@ describe("finalwhitelist", () => {
 		// 	await program.account.mainWhiteListingAccount.fetch(pda);
 		// console.log(mainWhitelistingAccount.counter);
 		const [new_pda1, _3] = await PublicKey.findProgramAddress(
-			[wallet.publicKey.toBuffer(), key1.toBuffer()],
+			[
+				wallet.publicKey.toBuffer(),
+				key1.toBuffer(),
+				Buffer.from(anchor.utils.bytes.utf8.encode(seed)),
+			],
 			program.programId,
 		);
 		// try {

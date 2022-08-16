@@ -52,7 +52,7 @@ pub struct CreateWhitelist<'info> {
 pub struct AddWallet<'info> {
     #[account(mut, has_one=authority, seeds=[authority.key().as_ref(), seed.as_bytes()], bump)]
     pub main_whitelisting_account: Account<'info, MainWhiteListingAccount>,
-    #[account(init, seeds=[authority.key().as_ref(), user.key().as_ref()], payer=authority, bump, space= Wallet::SPACE)]
+    #[account(init, seeds=[authority.key().as_ref(), user.key().as_ref(), seed.as_bytes()], payer=authority, bump, space= Wallet::SPACE)]
     pub whitelisted_wallet: Account<'info, Wallet>,
     /// CHECK: Passing in the users pubkey as a seed to create the whitelist reference
     pub user: UncheckedAccount<'info>,
@@ -66,7 +66,7 @@ pub struct AddWallet<'info> {
 pub struct RemoveWallet<'info> {
     #[account(mut, seeds=[authority.key().as_ref(), seed.as_bytes()], bump)]
     pub main_whitelisting_account: Account<'info, MainWhiteListingAccount>,
-    #[account(mut, seeds=[authority.key().as_ref(), user.key().as_ref()], bump, close=authority)]
+    #[account(mut, seeds=[authority.key().as_ref(), user.key().as_ref(), seed.as_bytes()], bump, close=authority)]
     pub whitelisted_wallet: Account<'info, Wallet>,
     /// CHECK: Passing in the users pubkey as a seed to create the whitelist reference
     pub user: UncheckedAccount<'info>,
@@ -79,13 +79,13 @@ pub struct RemoveWallet<'info> {
 pub struct EditWallet<'info> {
     #[account(mut, seeds=[authority.key().as_ref(), seed.as_bytes()], bump)]
     pub main_whitelisting_account: Account<'info, MainWhiteListingAccount>,
-    #[account(mut, seeds=[authority.key().as_ref(), user.key().as_ref()], bump, close=authority)]
+    #[account(mut, seeds=[authority.key().as_ref(), user.key().as_ref(), seed.as_bytes()], bump, close=authority)]
     pub whitelisted_wallet: Account<'info, Wallet>,
     /// CHECK: Passing in the users pubkey as a seed to create the whitelist reference
     pub user: UncheckedAccount<'info>,
     /// CHECK: Passing in the users pubkey as a seed to create the whitelist reference
     pub new_user: UncheckedAccount<'info>,
-    #[account(init, seeds=[authority.key().as_ref(), new_user.key().as_ref()], bump, space=Wallet::SPACE, payer=authority)]
+    #[account(init, seeds=[authority.key().as_ref(), new_user.key().as_ref(), seed.as_bytes()], bump, space=Wallet::SPACE, payer=authority)]
     pub new_wl_account: Account<'info, Wallet>,
     #[account(mut)]
     pub authority: Signer<'info>,
@@ -97,7 +97,7 @@ pub struct EditWallet<'info> {
 pub struct CheckWallet<'info> {
     #[account(mut, seeds=[authority.key().as_ref(), seed.as_bytes()], bump)]
     pub main_whitelisting_account: Account<'info, MainWhiteListingAccount>,
-    #[account(mut, seeds=[authority.key().as_ref(), user.key().as_ref()], bump)]
+    #[account(mut, seeds=[authority.key().as_ref(), user.key().as_ref(), seed.as_bytes()], bump)]
     pub whitelisted_wallet: Account<'info, Wallet>,
     /// CHECK: Passing in the users pubkey as a seed to create the whitelist reference
     pub user: UncheckedAccount<'info>,
